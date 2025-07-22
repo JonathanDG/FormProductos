@@ -57,7 +57,7 @@ document.getElementById('productForm').addEventListener('submit', function (e) {
   const producto = { nombre, categoria, precio, descripcion, imagenes: imagenesArray };
 
   // Enviar a backend
-  fetch('https://formproductos.onrender.com', {
+  fetch('https://formproductos.onrender.com/guardar-producto', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(producto)
