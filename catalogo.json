@@ -1,0 +1,30 @@
+[
+  {
+    "nombre": "Camiseta Negra",
+    "categoria": "Ropa",
+    "precio": 199.99,
+    "descripcion": "Camiseta de algodón 100% negra con estampado frontal.",
+    "imagenes": [
+      "camiseta1.jpg",
+      "camiseta2.jpg"
+    ]
+  },
+  {
+    "nombre": "Taza de café",
+    "categoria": "Accesorios",
+    "precio": 89.5,
+    "descripcion": "Taza cerámica blanca con logo de la marca.",
+    "imagenes": [
+      "taza1.jpg"
+    ]
+  },
+  {
+    "nombre": "Camisa 1",
+    "categoria": "Camisas",
+    "precio": 199,
+    "descripcion": "Es una camisa",
+    "imagenes": [
+      "jony.png"
+    ]
+  }
+]
