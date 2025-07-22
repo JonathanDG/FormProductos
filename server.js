@@ -1,46 +1,34 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import fs from 'fs';
 
 const app = express();
-const PORT = 3000;
-const FILE_PATH = path.join(__dirname, 'catalogo.json');
+const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(bodyParser.json());
+// PERMITIR ACCESO DESDE GITHUB PAGES
+app.use(cors({
+  origin: 'https://jonathandg.github.io'  // reemplaza por tu dominio real de GitHub Pages si es diferente
+}));
 
-// Crear el archivo si no existe
-if (!fs.existsSync(FILE_PATH)) {
-  fs.writeFileSync(FILE_PATH, '[]', 'utf8');
-}
+app.use(express.json());
 
 // Ruta para guardar producto
 app.post('/guardar-producto', (req, res) => {
   const nuevoProducto = req.body;
 
-  fs.readFile(FILE_PATH, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ mensaje: 'Error leyendo el archivo' });
+  fs.readFile('./catalogo.json', 'utf8', (err, data) => {
+    if (err) return res.status(500).json({ error: 'No se pudo leer el archivo' });
 
-    let productos = [];
-
-    try {
-      productos = JSON.parse(data);
-    } catch {
-      return res.status(500).json({ mensaje: 'Error al parsear JSON' });
-    }
-
+    let productos = JSON.parse(data);
     productos.push(nuevoProducto);
 
-    fs.writeFile(FILE_PATH, JSON.stringify(productos, null, 2), (err) => {
-      if (err) return res.status(500).json({ mensaje: 'Error al guardar producto' });
-
-      res.json({ mensaje: 'Producto guardado exitosamente' });
+    fs.writeFile('./catalogo.json', JSON.stringify(productos, null, 2), err => {
+      if (err) return res.status(500).json({ error: 'No se pudo guardar el producto' });
+      res.json({ mensaje: 'Producto guardado con éxito' });
     });
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
